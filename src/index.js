@@ -1,28 +1,26 @@
 import './sass/main.scss';
 import NewsApiService from './js/apiService';
 import createMarkup from './templates/galery.hbs';
-
 import { alert, defaultModules } from '@pnotify/core';
 import * as PNotifyMobile from '@pnotify/mobile';
-
 import '@pnotify/core/dist/BrightTheme.css';
 import '@pnotify/core/dist/PNotify.css';
 import '@pnotify/mobile/dist/PNotifyMobile.css';
-
 defaultModules.set(PNotifyMobile, {});
 
 const newsApiService = new NewsApiService();
 
-const searchBtn = document.querySelector('.search-form');
-const loadMoreBtn = document.querySelector('.load-more-btn');
-const wrapper = document.querySelector('.wrapper');
+const refs = {
+  searchBtn: document.querySelector('.search-form'),
+  loadMoreBtn: document.querySelector('.load-more-btn'),
+  wrapper: document.querySelector('.wrapper'),
+};
 
-searchBtn.addEventListener('submit', onSearchBtnClick);
-loadMoreBtn.addEventListener('click', onLoadMoreClick);
+refs.searchBtn.addEventListener('submit', onSearchBtnClick);
+refs.loadMoreBtn.addEventListener('click', onLoadMoreClick);
 
 async function onSearchBtnClick(event) {
   event.preventDefault();
-
   newsApiService.query = event.currentTarget.elements.query.value;
 
   if (newsApiService.query === '') {
@@ -34,44 +32,28 @@ async function onSearchBtnClick(event) {
     });
     return;
   }
-
-  // if (newsApiService.query.checkValidity() === false) {
-  //   alert({
-  //     type: 'error',
-  //     text: 'Incorrect input!',
-  //     closerHover: true,
-  //     delay: 500,
-  //   });
-  //   return;
-  // }
-
   newsApiService.resetPage();
   cleaningContainer();
 
-  const chototam = await newsApiService.fechImages();
-  renderHTML(chototam);
+  const array = await newsApiService.fechImages();
+  renderHTML(array);
 }
 
-function renderHTML(x) {
-  if (!newsApiService.query.length === 0) {
-    wrapper.innerHTML = '';
-    return;
-  }
-  const rendMarcup = createMarkup(x);
-  console.log(rendMarcup);
+function renderHTML(arr) {
+  const rendMarcup = createMarkup(arr);
+  refs.wrapper.insertAdjacentHTML('beforeend', rendMarcup);
+  refs.loadMoreBtn.classList.remove('visually-hidden');
+}
 
-  wrapper.insertAdjacentHTML('beforeend', rendMarcup);
+function cleaningContainer() {
+  refs.wrapper.innerHTML = '';
 }
 
 async function onLoadMoreClick() {
   const chototam = await newsApiService.fechImages();
   renderHTML(chototam);
-  loadMoreBtn.scrollIntoView({
+  refs.loadMoreBtn.scrollIntoView({
     behavior: 'smooth',
     block: 'end',
   });
-}
-
-function cleaningContainer() {
-  wrapper.innerHTML = '';
 }
