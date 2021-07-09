@@ -38,10 +38,10 @@ async function onSearchBtnClick(event) {
   const array = await newsApiService.fechImages();
   renderHTML(array);
 
-  // if (array[hits] === 0) {
-  //   console.log(array);
-  //   refs.loadMoreBtn.classList.add('visually-hidden');
-  // }
+  if (array.total === 0) {
+    console.log(array);
+    refs.loadMoreBtn.classList.add('visually-hidden');
+  }
 }
 
 function renderHTML(arr) {
