@@ -41,6 +41,13 @@ async function onSearchBtnClick(event) {
   if (array.total === 0) {
     console.log(array);
     refs.loadMoreBtn.classList.add('visually-hidden');
+    alert({
+      type: 'error',
+      text: 'Incorrect input!',
+      closerHover: true,
+      delay: 1000,
+    });
+    return;
   }
 }
 
