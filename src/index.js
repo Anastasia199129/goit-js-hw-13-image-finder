@@ -37,10 +37,20 @@ async function onSearchBtnClick(event) {
 
   const array = await newsApiService.fechImages();
   renderHTML(array);
+
+  // if (array[hits] === 0) {
+  //   console.log(array);
+  //   refs.loadMoreBtn.classList.add('visually-hidden');
+  // }
 }
 
 function renderHTML(arr) {
   const rendMarcup = createMarkup(arr);
+  console.log(rendMarcup);
+  console.log(rendMarcup === '');
+  // if (rendMarcup === '') {
+  //   refs.loadMoreBtn.classList.add('visually-hidden');
+  // }
   refs.wrapper.insertAdjacentHTML('beforeend', rendMarcup);
   refs.loadMoreBtn.classList.remove('visually-hidden');
 }
@@ -50,7 +60,8 @@ function cleaningContainer() {
 }
 
 async function onLoadMoreClick() {
-  const chototam = await newsApiService.fechImages();
+  const marcup = await newsApiService.fechImages();
+  console.log(marcup);
   renderHTML(chototam);
   refs.loadMoreBtn.scrollIntoView({
     behavior: 'smooth',
