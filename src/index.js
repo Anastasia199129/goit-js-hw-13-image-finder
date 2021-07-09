@@ -48,9 +48,6 @@ function renderHTML(arr) {
   const rendMarcup = createMarkup(arr);
   console.log(rendMarcup);
   console.log(rendMarcup === '');
-  // if (rendMarcup === '') {
-  //   refs.loadMoreBtn.classList.add('visually-hidden');
-  // }
   refs.wrapper.insertAdjacentHTML('beforeend', rendMarcup);
   refs.loadMoreBtn.classList.remove('visually-hidden');
 }
@@ -62,7 +59,7 @@ function cleaningContainer() {
 async function onLoadMoreClick() {
   const marcup = await newsApiService.fechImages();
   console.log(marcup);
-  renderHTML(chototam);
+  renderHTML(marcup);
   refs.loadMoreBtn.scrollIntoView({
     behavior: 'smooth',
     block: 'end',
