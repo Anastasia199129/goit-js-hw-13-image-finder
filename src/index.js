@@ -8,6 +8,10 @@ import '@pnotify/core/dist/PNotify.css';
 import '@pnotify/mobile/dist/PNotifyMobile.css';
 defaultModules.set(PNotifyMobile, {});
 
+// import * as basicLightbox from 'basiclightbox';
+
+// const basicLightbox = require('basiclightbox');
+
 const newsApiService = new NewsApiService();
 
 const refs = {
@@ -53,10 +57,17 @@ async function onSearchBtnClick(event) {
 
 function renderHTML(arr) {
   const rendMarcup = createMarkup(arr);
-  console.log(rendMarcup);
-  console.log(rendMarcup === '');
   refs.wrapper.insertAdjacentHTML('beforeend', rendMarcup);
   refs.loadMoreBtn.classList.remove('visually-hidden');
+
+  // const backdrop = document.querySelector('.backdrop');
+  // const link = document.querySelector('.photo-card');
+  // console.log(link);
+  // console.log(backdrop);
+  // link.addEventListener('click', onlinkClick);
+  // function onlinkClick(e) {
+  //   backdrop.classList.remove('visually-hidden');
+  // }
 }
 
 function cleaningContainer() {
